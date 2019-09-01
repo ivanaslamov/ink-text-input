@@ -31,6 +31,11 @@ interface CommonProps {
 	 * Function to call when `Enter` is pressed, where first argument is a value of the input.
 	 */
 	onSubmit?: (value: string) => void;
+
+	/**
+	 * Function to call when `Escape` is pressed.
+	 */
+	onCancel?: () => void;
 }
 
 export interface InkTextInputProps extends CommonProps {

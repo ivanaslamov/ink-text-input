@@ -11,6 +11,7 @@ const ENTER = '\r';
 const CTRL_C = '\x03';
 const BACKSPACE = '\x08';
 const DELETE = '\x7F';
+const ESCAPE = '\x27';
 
 class TextInput extends PureComponent {
 	static propTypes = {
@@ -23,7 +24,8 @@ class TextInput extends PureComponent {
 		stdin: PropTypes.object.isRequired,
 		setRawMode: PropTypes.func.isRequired,
 		onChange: PropTypes.func.isRequired,
-		onSubmit: PropTypes.func
+		onSubmit: PropTypes.func,
+		onCancel: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -32,7 +34,8 @@ class TextInput extends PureComponent {
 		focus: true,
 		mask: undefined,
 		highlightPastedText: false,
-		onSubmit: undefined
+		onSubmit: undefined,
+		onCancel: undefined
 	};
 
 	state = {
@@ -97,7 +100,7 @@ class TextInput extends PureComponent {
 	}
 
 	handleInput = data => {
-		const {value: originalValue, focus, showCursor, mask, onChange, onSubmit} = this.props;
+		const {value: originalValue, focus, showCursor, mask, onChange, onSubmit, onCancel} = this.props;
 		const {cursorOffset: originalCursorOffset} = this.state;
 
 		if (focus === false || this.isMounted === false) {
@@ -113,6 +116,14 @@ class TextInput extends PureComponent {
 		if (s === ENTER) {
 			if (onSubmit) {
 				onSubmit(originalValue);
+			}
+
+			return;
+		}
+
+		if (s === ESCAPE) {
+			if (onCancel) {
+				onCancel();
 			}
 
 			return;
