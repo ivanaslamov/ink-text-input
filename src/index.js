@@ -11,7 +11,7 @@ const ENTER = '\r';
 const CTRL_C = '\x03';
 const BACKSPACE = '\x08';
 const DELETE = '\x7F';
-const ESCAPE = '\x27';
+const ESCAPE = '\x1B';
 
 class TextInput extends PureComponent {
 	static propTypes = {
